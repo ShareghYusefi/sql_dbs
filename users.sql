@@ -46,7 +46,7 @@ CREATE TABLE users (
 
 --  Altering users table
 ALTER TABLE users 
-ADD password VARCHAR(100); 
+ADD password VARCHAR(100);
 
 -- Modifying users table
 ALTER TABLE users
@@ -101,6 +101,34 @@ UPDATE users SET password = 'newpassword123' WHERE id IN (2,5);
 -- Deleting data from users table
 DELETE FROM users WHERE id = 5;
 
+-- What is a primary key?
+-- A unique identifier for each record in a table. Usually the id column.
+
+ALTER TABLE users 
+CHANGE COLUMN id id INT AUTO_INCREMENT PRIMARY KEY;
+
+-- Insert a record without specifying the id
+INSERT INTO users (fullName, email, age, password) VALUES ('Tom Jerry', 'tom@gmail.com', 30, 'password123');
+
+-- What is a foreign key?
+-- A column in a table that is a primary key in another table. It is used to establish a relationship between two tables.
+
+-- Users have courses 
+CREATE TABLE courses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Inserting data into courses table
+INSERT INTO courses (name, user_id) VALUES ('Math 101', 1);
+
+-- Selecting data from multiple tables
+INSERT INTO courses (name, user_id)
+VALUES ('Science 101', 1),
+       ('History 101', 3),
+       ('English 101', 5);
 
 
        
