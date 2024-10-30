@@ -113,12 +113,22 @@ INSERT INTO users (fullName, email, age, password) VALUES ('Tom Jerry', 'tom@gma
 -- What is a foreign key?
 -- A column in a table that is a primary key in another table. It is used to establish a relationship between two tables.
 
+-- What are cascading actions?
+-- When a record in a parent table is deleted or updated, the same action is performed on the child table.
+-- There are different types of cascading actions such as CASCADE, SET NULL,  NO ACTION, RESTRICT.
+
+-- RESTRICT: Prevents the deletion of a record in the parent table if there are related records in the child table.
+-- NO ACTION: Same as RESTRICT.
+-- CASCADE: Deletes or updates the related records in the child table when a record in the parent table is deleted or updated.
+-- SET NULL: Sets the foreign key column in the child table to NULL when a record in the parent table is deleted or updated.
+
 -- Users have courses 
 CREATE TABLE courses (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) 
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Inserting data into courses table
@@ -129,6 +139,9 @@ INSERT INTO courses (name, user_id)
 VALUES ('Science 101', 1),
        ('History 101', 3),
        ('English 101', 5);
+
+
+
 
 
        
