@@ -75,5 +75,33 @@ CHANGE COLUMN name fullName VARCHAR(200);
 
 -- Data Manipulation Language (DML)
 
+-- Inserting data into users table
+INSERT INTO users (id, fullName, email, age, password)
+VALUES (1, 'John Doe', 'john@gmail.com', 25, 'password123');
 
+-- Inserting multiple records into users table
+INSERT INTO users (id, fullName, email, age, password)
+VALUES (2, 'Jane Doe', 'jane@gmail.com', 23, 'password123'),
+       (3, 'Juilian Cesar', 'julian@gmail.com', 32, 'password123'),
+       (4, 'Josh Mac', 'Josh@gmail.com', 27, 'password123');
+
+-- Selecting all data & columns from users table
+SELECT * FROM users;
+
+-- Selecting specific columns from users table
+SELECT id, fullName FROM users;
+
+-- filtering data using WHERE clause
+SELECT * FROM users WHERE age > 25;
+
+-- Updating data in users table
+UPDATE users SET password = 'newpassword123' WHERE id = 1;
+UPDATE users SET password = 'newpassword123' WHERE id IN (2,5);
+
+-- Deleting data from users table
+DELETE FROM users WHERE id = 5;
+
+
+
+       
 
