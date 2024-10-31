@@ -125,20 +125,47 @@ INSERT INTO users (fullName, email, age, password) VALUES ('Tom Jerry', 'tom@gma
 -- Users have courses 
 CREATE TABLE courses (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id) 
-    ON DELETE CASCADE ON UPDATE CASCADE
+    name VARCHAR(100)
+    -- user_id INT,
+    -- FOREIGN KEY (user_id) REFERENCES users(id) 
+    -- ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Inserting data into courses table
-INSERT INTO courses (name, user_id) VALUES ('Math 101', 1);
+
+-- A user can be enrolled in multiple courses
+-- A course can have multiple users
+-- This is a many-to-many relationship
+
+-- Create a pivot table to store user_id and course_id
+CREATE TABLE UserCourse (
+    user_id INT, 
+    course_id INT, 
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 -- Selecting data from multiple tables
-INSERT INTO courses (name, user_id)
-VALUES ('Science 101', 1),
-       ('History 101', 3),
-       ('English 101', 5);
+INSERT INTO courses (name)
+VALUES ('Science 101'),
+       ('History 101'),
+       ('English 101');
+
+-- Inserting data into UserCourse table (pivot table)
+INSERT INTO UserCourse (user_id, course_id)    
+VALUES (1, 1),
+       (1, 2),
+       (2, 1),
+       (3, 3),
+       (4, 2);
+
+-- Finding all course belonging to a user
+-- aliasing a table involves giving a table a temporary name
+SELECT u.id, u.fullName, c.name 'course' FROM users u
+JOIN UserCourse uc ON u.id = uc.user_id
+JOIN courses c ON c.id = uc.course_id
+WHERE u.id = 1
+ORDER BY c.name DESC;
+
 
 
 
